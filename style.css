@@ -1,0 +1,484 @@
+/* ================================================================
+   OPÉRATION DIFFRACTION — ALTERNATIVES
+   fichier de style.css
+   ================================================================
+
+   SOMMAIRE
+   0.  Typos
+   1.  Variables
+   2.  Reset & base
+   3.  Image de fond  ← changer le FOND ICI
+   4.  En-tête
+   5.  Canvas
+   6.  Items — structure commune
+   7.  Positions par item (item--N)
+   8.  Légendes
+   9.  Pied de page
+   10. Responsive
+
+   ================================================================ */
+
+
+/* ================================================================
+   TYPOS
+   Toutes les fonts sont dans le dossier "fonts/"
+   ================================================================ */
+
+@font-face {
+  font-family: 'SourceCodePro';
+  src: url('fonts/SourceCodePro-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'EurostileLTStdExtended2';
+  src: url('fonts/EurostileLTStdExtended2.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ExposureNeutral';
+  src: url('fonts/ExposureTrial[0].otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ExposureItalic';
+  src: url('fonts/ExposureItalicTrial[+10].otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* ================================================================
+   1. VARIABLES
+   ================================================================ */
+
+:root {
+  --text:       #ffffff;
+  --muted:      #ffffff;
+  --font-eurostile-neg:     'EurostileLTStdExtended2', serif;      /* _ALTERNATIVES */
+  --font-exposure-neutral: 'ExposureNeutral', serif;   /* légendes, bouton */
+  --font-exposure-italic:  'ExposureItalic', serif;    /* légendes italique */
+  --font-source-code:      'SourceCodePro', monospace; /* Opération Diffraction */
+  --font-mono:  'SourceCodePro', monospace;           /* sous-titre, noms */
+}
+
+
+/* ================================================================
+   2. RESET & BASE
+   ================================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ffffff;  /* couleur de fond si pas d'image */
+  color: var(--text);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+/* ================================================================
+   3. IMAGE DE FOND
+   ================================================================
+   L'image est définie dans index.html :
+      <div class="bg-image" style="background-image: url('media/bg01.jpg');"></div>
+
+   Réglages ajustables dans ce fichier style.css:
+   - opacity          : 0 (invisible) → 1 (pleine opacité)
+   - background-size  : cover | contain | ex. "70%"
+   - background-position : center | top | bottom
+   ================================================================ */
+
+.bg-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 1; /* --> transparence du background */
+  pointer-events: none;
+}
+
+
+/* ================================================================
+   4. EN-TÊTE
+   ================================================================ */
+
+.site-header {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Noms en haut à gauche --- */
+.header-authors {
+  position: absolute;
+  top: 2.4rem;
+  left: 2.8rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.52rem, 0.85vw, 0.68rem);
+  letter-spacing: 0.08em;
+  color: var(--text);
+  line-height: 1.85;
+}
+
+.authors-collective {
+  margin-bottom: 0.3rem;
+}
+
+/* --- Bloc central --- */
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+/* "[ Opération Diffraction ]" */
+.header-operation {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+  letter-spacing: 0.18em;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+/* "_ALTERNATIVES" */
+.header-title-main {
+  font-family: var(--font-eurostile-neg);
+  font-size: clamp(3.5rem, 8.5vw, 7rem);
+  letter-spacing: -0.01em;
+  color: var(--text);
+  line-height: 1;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* "[ Répertoire de nos recherches et inspirations ]" */
+.header-subtitle {
+  font-family: var(--font-mono);
+  font-size: clamp(0.6rem, 1vw, 0.82rem);
+  letter-spacing: 0.12em;
+  color: var(--text);
+  margin-top: 1.2rem;
+}
+
+
+/* ================================================================
+   5. CANVAS DES IMAGES
+   ================================================================
+   Zone de placement libre en position absolute.
+   Augmenter height si les images débordent en bas.
+   ================================================================ */
+
+.canvas {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 6200px; /* --> hauteur totale — augmenter si besoin */
+}
+
+
+/* ================================================================
+   6. ITEMS — STRUCTURE COMMUNE
+   ================================================================ */
+
+.item {
+  position: absolute;
+  display: inline-block;
+}
+
+.item a {
+  display: block;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.25s ease;
+}
+
+.item:hover img {
+  opacity: 0.82;
+}
+
+
+/* ================================================================
+   7. POSITIONS PAR ITEM (ITEM = 1 photo + légende)
+   ================================================================
+   Chaque item--N définit :
+   - left      : position horizontale (% ou px depuis le bord gauche)
+   - top       : position verticale (px depuis le haut du canvas)
+   - width     : largeur de l'image
+   - transform : rotation optionnelle
+
+   Taille minimum = 420px (ancienne max), jusqu'à 680px.
+
+   POUR AJOUTER UN ITEM :
+   .item--N { left: X%; top: Ypx; width: Zpx; }
+   ================================================================ */
+
+.item--1 {
+  left: 44%;
+  top: 60px;
+  width: 620px;
+  transform: rotate(-0deg);
+}
+
+.item--2 {
+  left: 2%;
+  top: 80px;
+  width: 440px;
+  transform: rotate(0deg);
+}
+
+.item--3 {
+  left: 20%;
+  top: 620px;
+  width: 320px;
+  transform: rotate(-0deg);
+}
+
+.item--4 {
+  left: 60%;
+  top: 560px;
+  width: 600px;
+  transform: rotate(0deg);
+}
+
+.item--5 {
+  left: 1%;
+  top: 1220px;
+  width: 430px;
+  transform: rotate(-0deg);
+}
+
+.item--6 {
+  left: 50%;
+  top: 1060px;
+  width: 500px;
+  transform: rotate(0deg);
+}
+
+.item--7 {
+  left: 57%;
+  top: 1560px;
+  width: 460px;
+  transform: rotate(0deg);
+}
+
+.item--8 {
+  left: 20%;
+  top: 1540px;
+  width: 560px;
+  transform: rotate(-0deg);
+}
+
+.item--9 {
+  left: 30%;
+  top: 2060px;
+  width: 440px;
+  transform: rotate(0deg);
+}
+
+.item--10 {
+  left: 1%;
+  top: 2480px;
+  width: 620px;
+  transform: rotate(-0deg);
+}
+
+.item--11 {
+  left: 46%;
+  top: 2680px;
+  width: 660px;
+  transform: rotate(0deg);
+}
+
+.item--12 {
+  left: 20%;
+  top: 3060px;
+  width: 500px;
+  transform: rotate(-0deg);
+}
+
+.item--13 {
+  left: 44%;
+  top: 3460px;
+  width: 620px;
+  transform: rotate(-0deg);
+}
+
+.item--14 {
+  left: 2%;
+  top: 3660px;
+  width: 440px;
+  transform: rotate(0deg);
+}
+
+.item--15 {
+  left: 20%;
+  top: 4200px;
+  width: 520px;
+  transform: rotate(-0deg);
+}
+
+.item--16 {
+  left: 60%;
+  top: 4200px;
+  width: 600px;
+  transform: rotate(0deg);
+}
+
+.item--17 {
+  left: 1%;
+  top: 4700px;
+  width: 430px;
+  transform: rotate(-0deg);
+}
+
+.item--18 {
+  left: 40%;
+  top: 4900px;
+  width: 500px;
+  transform: rotate(0deg);
+}
+
+.item--19 {
+  left: 57%;
+  top: 5600px;
+  width: 460px;
+  transform: rotate(0deg);
+}
+
+.item--20 {
+  left: 2%;
+  top: 5600px;
+  width: 560px;
+  transform: rotate(-0deg);
+}
+
+
+
+/* ================================================================
+   8. LÉGENDES
+   ================================================================ */
+
+.item figcaption {
+  margin-top: 0.4rem;
+  font-family: var(--font-exposure-italic);
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ================================================================
+   LIEN "EN SAVOIR PLUS →" sous les légendes
+   ================================================================ */
+
+.fig-link {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-family: var(--font-exposure-neutral);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-decoration: none;
+  padding-bottom: 1px;
+  font-style: normal;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.fig-link:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+
+
+/* ================================================================
+   9. PIED DE PAGE
+   ================================================================ */
+
+.site-footer {
+  position: relative;
+  z-index: 10;
+  padding: 2rem 3.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  border-top: 1px solid #e0dbd3;
+}
+
+
+/* ================================================================
+   10. RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 720px) {
+  .canvas {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .item {
+    position: static;
+    width: 100% !important;
+    transform: none !important;
+  }
+
+  .site-header {
+    min-height: 100svh;
+    padding: 1.8rem 1.2rem 1.5rem;
+  }
+
+  .header-authors {
+    top: 1.4rem;
+    left: 1.2rem;
+  }
+
+  .header-title-main {
+    font-size: 2.4rem;
+  }
+
+  .header-operation,
+  .header-subtitle {
+    font-size: 0.6rem;
+  }
+}
+
+
+/* Titre de la référence — italique */
+.cap-title {
+  font-family: var(--font-exposure-italic);
+  font-style: italic;
+}
+
+/* Auteur, date, type — droit, ExposureTrial[0] */
+.cap-author {
+  font-family: var(--font-exposure-neutral);
+  font-style: normal;
+}
